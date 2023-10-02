@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:piriing/Screens/Login/login_screen.dart';
+import 'package:piriing/Screens/profile/editProfile.dart';
 import 'package:piriing/components/bottom_nav.dart';
 import 'package:piriing/components/gradientColors.dart';
 import 'package:piriing/model/user.dart';
@@ -453,6 +454,17 @@ class _DashboardState extends State<Dashboard> {
                   // Card ketiga (Salin dan sesuaikan elemen di atas untuk card selanjutnya)
                 ],
               ),
+            ),
+            Container(
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfile(),
+                        ));
+                  },
+                  child: Text("b")),
             )
 
             // Gunakan ListView.builder untuk membuat daftar informasi gizi & kesehatan
