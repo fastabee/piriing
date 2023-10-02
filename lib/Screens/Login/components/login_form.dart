@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:piriing/Screens/dashboard/dashboar.dart';
 import 'package:piriing/components/constants.dart';
 import 'package:piriing/model/user.dart';
@@ -95,8 +96,21 @@ class _LoginFormState extends State<LoginForm> {
             builder: (context) => Dashboard(),
           ));
     } else {
-      print('Gagal masuk: ${response.statusCode}');
-      print('Pesan kesalahan: ${response.body}');
+      final responseData = json.decode(response.body);
+
+      if (responseData['response'] != null) {
+        final errorMessage = 'username atau password salah';
+        Fluttertoast.showToast(
+          msg: errorMessage,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+        );
+      } else {
+        print('Gagal masuk: ${response.statusCode}');
+        print('Pesan kesalahan: ${response.body}');
+      }
     }
   }
 

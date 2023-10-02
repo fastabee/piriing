@@ -465,6 +465,13 @@ class _DashboardState extends State<Dashboard> {
                         ));
                   },
                   child: Text("b")),
+            ),
+            Container(
+              child: ElevatedButton(
+                  onPressed: () {
+                    logoutUser();
+                  },
+                  child: Text("b")),
             )
 
             // Gunakan ListView.builder untuk membuat daftar informasi gizi & kesehatan
