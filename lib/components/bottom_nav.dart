@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -54,7 +55,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 selected: widget.selected,
                 icon: 'user.png',
                 navigateTo: "/profile"),
-            const Spacer(),
           ],
         ),
       ),
