@@ -4,9 +4,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:piriing/Screens/Welcome/welcome_screen.dart';
 import 'package:piriing/Screens/dashboard/dashboar.dart';
 import 'package:piriing/Screens/kalori/kalori.dart';
-
-import 'package:piriing/Screens/profile/profile.dart';
 import 'package:get/get.dart';
+import 'package:piriing/Screens/profile/profile.dart';
+
 import 'package:piriing/Screens/riwayat/riwayat.dart';
 import 'package:piriing/bloc/nav/nav_bloc.dart';
 
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
             );
           case '/profile':
             return PageTransition(
-              child: Profile(),
+              child: const profile2(),
               type: PageTransitionType.fade,
               alignment: Alignment.center,
               duration: const Duration(milliseconds: 0),
