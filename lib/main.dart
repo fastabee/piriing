@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
             );
           case '/profile':
             return PageTransition(
-              child: const Profile(),
+              child: const profile2(),
               type: PageTransitionType.fade,
               alignment: Alignment.center,
               duration: const Duration(milliseconds: 0),
