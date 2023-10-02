@@ -1,8 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:piriing/Screens/Login/login_screen.dart';
+import 'package:piriing/Screens/profile/editProfile.dart';
+import 'package:piriing/model/user.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class profile2 extends StatefulWidget {
   const profile2({Key? key}) : super(key: key);
@@ -12,6 +20,51 @@ class profile2 extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<profile2> {
+  String Nama = '';
+  String Email = '';
+  String tglLahir = '';
+  String BB = '';
+  String TB = '';
+  String telp = '';
+  String username = '';
+
+  Future<void> loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userDataString = prefs.getString('user_data');
+
+    if (userDataString != null) {
+      final userData = UserData.fromJson(json.decode(userDataString));
+      print(userData.nama);
+
+      setState(() {
+        Nama = userData.nama;
+        Email = userData.email;
+        tglLahir = userData.tglLahir;
+        BB = userData.beratBadan;
+        TB = userData.tinggiBadan;
+        telp = userData.noTelp;
+        username = userData.username;
+      });
+    }
+  }
+
+  Future<void> logoutUser() async {
+    // Hapus token akses dari Shared Preferences
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('access_token');
+    prefs.remove('user_data'); // Jika ada data pengguna lain yang perlu dihapus
+
+    // Arahkan pengguna kembali ke halaman login
+    Navigator.of(context).pushAndRemoveUntil(
+      PageTransition(
+        child: LoginScreen(),
+        type: PageTransitionType.fade,
+        duration: const Duration(milliseconds: 500),
+      ),
+      (route) => false, // Hapus seluruh riwayat navigasi
+    );
+  }
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   XFile? _imageFile;
   Future<void> _getImageFromGallery() async {
@@ -28,6 +81,7 @@ class _HomePageWidgetState extends State<profile2> {
   @override
   void initState() {
     super.initState();
+    loadUserData();
   }
 
   @override
@@ -50,8 +104,8 @@ class _HomePageWidgetState extends State<profile2> {
                 height: 750,
                 child: Stack(
                   children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
+                    Container(
+                      padding: const EdgeInsets.only(top: 150),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 4,
@@ -85,17 +139,16 @@ class _HomePageWidgetState extends State<profile2> {
                           ),
                           child: Stack(
                             children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 65, 0, 0),
+                              Container(
+                                margin: EdgeInsets.only(top: 40),
+                                alignment: Alignment.topCenter,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          168, 0, 0, 0),
+                                    Container(
                                       child: Text(
-                                        'Username',
+                                        username,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontFamily: 'Readex Pro',
@@ -529,7 +582,7 @@ class _HomePageWidgetState extends State<profile2> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           10, 0, 0, 0),
                                       child: Text(
-                                        'Steven Rio ',
+                                        Nama,
                                         style: TextStyle(
                                             fontFamily: 'Readex Pro',
                                             fontSize: 12),
@@ -562,7 +615,7 @@ class _HomePageWidgetState extends State<profile2> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           10, 0, 0, 0),
                                       child: Text(
-                                        'steve50@gmail.com',
+                                        Email,
                                         style: TextStyle(
                                           fontFamily: 'Readex Pro',
                                           fontSize: 12,
@@ -597,7 +650,7 @@ class _HomePageWidgetState extends State<profile2> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8, 0, 0, 0),
                                       child: Text(
-                                        '02-06-2003',
+                                        tglLahir,
                                         style: TextStyle(
                                           fontFamily: 'Readex Pro',
                                           fontSize: 12,
@@ -632,7 +685,7 @@ class _HomePageWidgetState extends State<profile2> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8, 0, 0, 0),
                                       child: Text(
-                                        '90 kg',
+                                        BB,
                                         style: TextStyle(
                                           fontFamily: 'Readex Pro',
                                           fontSize: 12,
@@ -667,7 +720,7 @@ class _HomePageWidgetState extends State<profile2> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           6, 0, 0, 0),
                                       child: Text(
-                                        '190 cm',
+                                        TB,
                                         style: TextStyle(
                                           fontFamily: 'Readex Pro',
                                           fontSize: 12,
@@ -705,7 +758,7 @@ class _HomePageWidgetState extends State<profile2> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           5, 0, 0, 0),
                                       child: Text(
-                                        '0895634402802',
+                                        telp,
                                         style: TextStyle(
                                           fontFamily: 'Readex Pro',
                                           fontSize: 12,
@@ -721,7 +774,9 @@ class _HomePageWidgetState extends State<profile2> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 430, 0, 0),
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      logoutUser();
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       fixedSize: Size(200, 45),
                                       primary: Color.fromARGB(255, 255, 140,
@@ -753,7 +808,13 @@ class _HomePageWidgetState extends State<profile2> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 490, 0, 0),
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => EditProfile(),
+                                          ));
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       fixedSize: Size(200, 45),
                                       primary: Color.fromARGB(255, 255, 48,
@@ -783,8 +844,9 @@ class _HomePageWidgetState extends State<profile2> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(150, 85, 0, 0),
+                    Container(
+                      alignment: Alignment.topCenter,
+                      margin: EdgeInsets.only(top: 60),
                       child: GestureDetector(
                         onTap: () {
                           print("Tapped on circle image");

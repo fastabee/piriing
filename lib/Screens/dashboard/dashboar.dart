@@ -8,6 +8,7 @@ import 'package:piriing/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:marquee/marquee.dart';
+import 'package:piriing/Screens/profile/profile.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -461,7 +462,7 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditProfile(),
+                          builder: (context) => profile2(),
                         ));
                   },
                   child: Text("b")),
