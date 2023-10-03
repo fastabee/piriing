@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:piriing/Screens/Login/login_screen.dart';
+import 'package:piriing/Screens/kalori/kalori.dart';
 import 'package:piriing/Screens/kalori/kaloriharian.dart';
-
+import 'package:piriing/Screens/tambahdarah/inputdarah.dart';
+import 'package:piriing/Screens/tambahdarah/kalenderTab.dart';
+import 'package:piriing/Screens/tambahdarah/kalenderTab.dart';
 import 'package:piriing/components/bottom_nav.dart';
 
 import 'package:piriing/model/user.dart';
@@ -463,7 +466,7 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => KaloriHarian(),
+                          builder: (context) => TambahDarahKal(),
                         ));
                   },
                   child: Text("b")),
@@ -471,10 +474,14 @@ class _DashboardState extends State<Dashboard> {
             Container(
               child: ElevatedButton(
                   onPressed: () {
-                    logoutUser();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InputDarah(),
+                        ));
                   },
                   child: Text("b")),
-            )
+            ),
 
             // Gunakan ListView.builder untuk membuat daftar informasi gizi & kesehatan
           ],
