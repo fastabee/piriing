@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:piriing/Screens/Login/login_screen.dart';
-import 'package:piriing/Screens/profile/editProfile.dart';
+import 'package:piriing/Screens/kalori/kaloriharian.dart';
+
 import 'package:piriing/components/bottom_nav.dart';
-import 'package:piriing/components/gradientColors.dart';
+
 import 'package:piriing/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:page_transition/page_transition.dart';
@@ -462,7 +463,7 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => profile2(),
+                          builder: (context) => KaloriHarian(),
                         ));
                   },
                   child: Text("b")),

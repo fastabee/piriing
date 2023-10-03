@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:piriing/components/bottom_nav.dart';
-import 'package:get/get.dart';
 
 class Kalori extends StatefulWidget {
   const Kalori({super.key});
