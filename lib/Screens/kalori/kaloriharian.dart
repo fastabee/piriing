@@ -137,55 +137,63 @@ class _KaloriHarianState extends State<KaloriHarian> {
                         height: 70, // Tinggi container
                         child: Column(
                           children: [
-                            // Card pertama
-                            Card(
-                              elevation: 15, // Tingkat elevasi card
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              margin: EdgeInsets.only(left: 20, right: 20),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 10.0,
-                                    bottom: 5,
-                                    right: 10.0), // Padding untuk konten card
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // Gambar dari asset
-                                    Container(
-                                      width: 60.0, // Lebar gambar
-                                      height: 60.0, // Tinggi gambar
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/morning.png'),
-                                          fit: BoxFit.cover,
+                            InkWell(
+                              onTap: () {
+                                // Tambahkan kode navigasi ke halaman dashboard di sini
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return TambahKalori(); // Ganti dengan halaman dashboard yang sesuai
+                                }));
+                              },
+                              child: Card(
+                                elevation: 15, // Tingkat elevasi card
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 10.0,
+                                      bottom: 5,
+                                      right: 10.0), // Padding untuk konten card
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Gambar dari asset
+                                      Container(
+                                        width: 60.0, // Lebar gambar
+                                        height: 60.0, // Tinggi gambar
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/morning.png'),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                    Center(
-                                      child: Text(
-                                        'SARAPAN',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
+                                      Center(
+                                        child: Text(
+                                          'SARAPAN',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
-                                    ),
 
-                                    Container(
-                                      child: Icon(
-                                        Icons.plus_one,
-                                        color: Colors.orange,
-                                        size: 25,
+                                      Container(
+                                        child: Icon(
+                                          Icons.plus_one,
+                                          color: Colors.orange,
+                                          size: 25,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
