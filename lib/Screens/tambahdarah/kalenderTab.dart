@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:piriing/Screens/dashboard/dashboar.dart';
+import 'package:piriing/Screens/tambahdarah/inputdarah.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -48,50 +50,52 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
           SafeArea(
             child: Container(
               width: MediaQuery.of(context).size.width,
-              child: Stack(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Padding(padding: EdgeInsets.only(left: 10)),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.orange,
-                                  size: 25,
+                  Container(
+                    child: Row(
+                      children: [
+                        Padding(padding: EdgeInsets.only(left: 10)),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.orange,
+                              size: 25,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Dashboard(),
                                 ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              child: Text(
-                                'KALENDER TAMBAH DARAH',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                      // Add your other UI components here
-                    ],
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Container(
+                          child: Text(
+                            'KALENDER TAMBAH DARAH',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+
+                  // Add your other UI components here
                 ],
               ),
             ),
@@ -124,7 +128,7 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                               width: MediaQuery.of(context).size.height * 0.4,
                               height: 30,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 98, 182, 250),
+                                color: Colors.deepOrange,
                                 borderRadius: BorderRadius.circular(30),
                                 boxShadow: kElevationToShadow[1],
                               ),
@@ -134,7 +138,7 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'pendaftaran Antrian',
+                                  'Tambah Darah',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -180,122 +184,37 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                               _onFormatChanged(format);
                             },
                           ),
-                          SizedBox(height: 20), // Tambahkan jarak di sini
-                          Container(
-                            child: Text(
-                              'Jadwal Praktek',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          SizedBox(height: 10), // Tambahkan jarak di sini
-                          Container(
-                            child: Text(
-                              'Tanggal Terpilih: $selectedDateText',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          SizedBox(height: 30),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.only(left: 40),
-                              height: 100,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 2,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (index == 0) {
-                                          isSchedule1Selected =
-                                              !isSchedule1Selected;
-                                          isSchedule2Selected = false;
-                                        } else {
-                                          isSchedule2Selected =
-                                              !isSchedule2Selected;
-                                          isSchedule1Selected = false;
-                                        }
-                                      });
-                                    },
-                                    child: Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: index == 0
-                                            ? (isSchedule1Selected
-                                                ? Colors.blue.withOpacity(0.2)
-                                                : Colors.white)
-                                            : (isSchedule2Selected
-                                                ? Colors.blue.withOpacity(0.2)
-                                                : Colors.white),
-                                        borderRadius: BorderRadius.circular(
-                                            30), // Setengah dari tinggi Container
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 2,
-                                            blurRadius: 5,
-                                            offset: Offset(0, 3),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          index == 0 ? schedule1 : schedule2,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: index == 0
-                                                ? (isSchedule1Selected
-                                                    ? Colors.blue
-                                                    : Colors.black)
-                                                : (isSchedule2Selected
-                                                    ? Colors.blue
-                                                    : Colors.black),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
                           SizedBox(height: 20),
                           Container(
                             alignment: Alignment.center,
                             child: ElevatedButton(
                               onPressed: () {
-                                print('tangggal : $selectedDateText');
-                                if (isSchedule1Selected) {
-                                  print('waktu : $schedule1');
-                                }
-                                if (isSchedule2Selected) {
-                                  print('waktu : $schedule2');
-                                }
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => AntrianForm(
-                                //       dokter: widget.dokter,
-                                //       selectedDate:
-                                //           selectedDateText, // Mengirim tanggal terpilih
-                                //       selectedTime: isSchedule1Selected
-                                //           ? schedule1
-                                //           : (isSchedule2Selected
-                                //               ? schedule2
-                                //               : ""), // Mengirim waktu terpilih
-                                //     ),
-                                //   ),
-                                // );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => InputDarah(),
+                                  ),
+                                );
                               },
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: Size(200, 45),
+                                primary: Color.fromARGB(255, 255, 48,
+                                    48), // Atur warna latar belakang tombol
+                                onPrimary:
+                                    Colors.white, // Atur warna teks tombol
+                                padding:
+                                    EdgeInsets.all(16), // Atur padding tombol
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      8), // Atur sudut tombol
+                                ),
+                                elevation: 3,
+                                textStyle: TextStyle(
+                                  fontSize: 12, // Atur ukuran teks tombol
+                                  fontWeight: FontWeight
+                                      .bold, // Atur ketebalan teks tombol
+                                ),
+                              ),
                               child: Text('Selanjutnya'),
                             ),
                           ),

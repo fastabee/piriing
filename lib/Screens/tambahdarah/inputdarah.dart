@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:piriing/Screens/dashboard/dashboar.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -10,6 +11,7 @@ void main() {
 class InputDarah extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     return Scaffold(
       body: Stack(
         children: [
@@ -48,7 +50,10 @@ class InputDarah extends StatelessWidget {
                               size: 25,
                             ),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Dashboard()));
                             },
                           ),
                         ),
@@ -123,7 +128,7 @@ class InputDarah extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '2 Oktober 2023 | 11.00',
+                                  'Tanggal: $currentDate',
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.black,
