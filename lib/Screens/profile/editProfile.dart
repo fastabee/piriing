@@ -1,16 +1,40 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:piriing/model/user.dart';
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:piriing/model/user.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfile extends StatefulWidget {
+  const EditProfile({Key? key}) : super(key: key);
+
   @override
-  _EditProfileState createState() => _EditProfileState();
+  _HomePageWidgetState createState() => _HomePageWidgetState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _HomePageWidgetState extends State<EditProfile> {
+  String? _validateNotEmpty(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Harus diisi';
+    }
+    return null; // Data valid
+  }
+
+  XFile? _imageFile;
+  Future<void> _getImageFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    }
+  }
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   String Id = '';
 
   Future<void> loadUserData() async {
@@ -127,80 +151,507 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Registrasi'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+    return GestureDetector(
+        child: Scaffold(
+      key: scaffoldKey,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        top: true,
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
-              TextField(
-                controller: usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-              ),
-              TextField(
-                controller: jabatanController,
-                decoration: InputDecoration(labelText: 'Jabatan'),
-              ),
-              TextField(
-                controller: namaController,
-                decoration: InputDecoration(labelText: 'Nama'),
-              ),
-              TextField(
-                controller: tanggalLahirController,
-                decoration: InputDecoration(labelText: 'Tanggal Lahir'),
-              ),
-              TextField(
-                controller: tinggiBadanController,
-                decoration: InputDecoration(labelText: 'Tinggi Badan'),
-              ),
-              TextField(
-                controller: alamatController,
-                decoration: InputDecoration(labelText: 'Alamat'),
-              ),
-              TextField(
-                controller: kecamatanController,
-                decoration: InputDecoration(labelText: 'Kecamatan'),
-              ),
-              TextField(
-                controller: kabupatenController,
-                decoration: InputDecoration(labelText: 'Kabupaten'),
-              ),
-              TextField(
-                controller: provinsiController,
-                decoration: InputDecoration(labelText: 'Provinsi'),
-              ),
-              TextField(
-                controller: jenisKelaminController,
-                decoration: InputDecoration(labelText: 'Jenis Kelamin'),
-              ),
-              TextField(
-                controller: noTelpController,
-                decoration: InputDecoration(labelText: 'Nomor Telepon'),
-              ),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-              ),
-              TextField(
-                controller: umurController,
-                decoration: InputDecoration(labelText: 'Umur'),
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  registerUser();
-                  print(Id);
-                },
-                child: Text('Register'),
+              Stack(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(0.00, -1.00),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 55, 0, 0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Container(
+                                width: 200,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFFFC327),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0, 2),
+                                      spreadRadius: 4,
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 0),
+                                      child: Text('Update Profile',
+                                          style: TextStyle(fontSize: 14)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0.00, -1.00),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 185, 0, 0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(0),
+                                  bottomRight: Radius.circular(0),
+                                  topLeft: Radius.circular(25),
+                                  topRight: Radius.circular(25),
+                                ),
+                              ),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 680,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFFF7D23),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x33000000),
+                                      offset: Offset(0, 2),
+                                      spreadRadius: 4,
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(0),
+                                    bottomRight: Radius.circular(0),
+                                    topLeft: Radius.circular(25),
+                                    topRight: Radius.circular(25),
+                                  ),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 85, 8, 0),
+                                      child: TextFormField(
+                                        controller: usernameController,
+                                        autofocus: true,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelText: 'Username',
+                                          labelStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                          ),
+                                          hintText:
+                                              'Masukkan Username Baru Disini',
+                                          hintStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                            letterSpacing: 1,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFFFFC327),
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Colors.white,
+                                        ),
+                                        validator: _validateNotEmpty,
+                                        // validator: _model
+                                        //     .textController1Validator
+                                        //     .asValidator(context),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 185, 8, 0),
+                                      child: TextFormField(
+                                        // controller: _model.textController2,
+                                        autofocus: true,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelText: 'Berat Badan',
+                                          labelStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                          ),
+                                          hintText:
+                                              'Masukkan Berat Badan Disini',
+                                          hintStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                            letterSpacing: 1,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFFFFC327),
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Colors.white,
+                                        ),
+                                        validator: _validateNotEmpty,
+                                        // validator: _model
+                                        //     .textController2Validator
+                                        //     .asValidator(context),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 285, 8, 0),
+                                      child: TextFormField(
+                                        controller: tinggiBadanController,
+                                        autofocus: true,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelText: 'Tinggi Badan',
+                                          labelStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                          ),
+                                          hintText:
+                                              'Masukkan Tinggi Badan Disini',
+                                          hintStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                            letterSpacing: 1,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFFFFC327),
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Colors.white,
+                                        ),
+                                        validator: _validateNotEmpty,
+                                        // validator: _model
+                                        //     .textController3Validator
+                                        //     .asValidator(context),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 385, 8, 0),
+                                      child: TextFormField(
+                                        // controller: _model.textController3,
+                                        autofocus: true,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelText: 'Tinggi Badan',
+                                          labelStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                          ),
+                                          hintText:
+                                              'Masukkan Tinggi Badan Baru Disini',
+                                          hintStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                            letterSpacing: 1,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFFFFC327),
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Colors.white,
+                                        ),
+                                        validator: _validateNotEmpty,
+                                        // validator: _model
+                                        //     .textController3Validator
+                                        //     .asValidator(context),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 485, 8, 0),
+                                      child: TextFormField(
+                                        // controller: _model.textController3,
+                                        autofocus: true,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelText: 'Tinggi Badan',
+                                          labelStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                          ),
+                                          hintText:
+                                              'Masukkan Tinggi Badan Baru Disini',
+                                          hintStyle: TextStyle(
+                                            fontFamily: 'Readex Pro',
+                                            color: Colors.white,
+                                            letterSpacing: 1,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFFFFC327),
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        style: TextStyle(
+                                          fontFamily: 'Readex Pro',
+                                          color: Colors.white,
+                                        ),
+                                        validator: _validateNotEmpty,
+                                        // validator: _model
+                                        //     .textController3Validator
+                                        //     .asValidator(context),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment:
+                                          AlignmentDirectional(0.00, -1.00),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 585, 0, 0),
+                                        child: ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            fixedSize: Size(150, 45),
+                                            primary: Color.fromARGB(
+                                                255,
+                                                255,
+                                                206,
+                                                58), // Atur warna latar belakang tombol
+                                            onPrimary: Colors
+                                                .white, // Atur warna teks tombol
+                                            padding: EdgeInsets.all(
+                                                16), // Atur padding tombol
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      8), // Atur sudut tombol
+                                            ),
+                                            elevation: 5,
+                                            textStyle: TextStyle(
+                                              fontSize:
+                                                  14, // Atur ukuran teks tombol
+                                              fontWeight: FontWeight
+                                                  .bold, // Atur ketebalan teks tombol
+                                              fontFamily: 'Readex Pro',
+                                            ),
+                                          ),
+                                          child: Text(
+                                              'Submit'), // Teks yang akan ditampilkan pada tombol
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(150, 115, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              print("Tapped on circle image");
+                              _getImageFromGallery();
+                            },
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: _imageFile != null
+                                  ? Image.file(
+                                      File(_imageFile!.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Icon(
+                                      Icons.camera_alt,
+                                      size: 40.0,
+                                      color: Colors.white,
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 }
