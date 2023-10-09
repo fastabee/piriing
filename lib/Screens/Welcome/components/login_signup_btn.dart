@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:piriing/Screens/Login/components/login_form.dart';
 import 'package:piriing/components/constants.dart';
 
-import '../../Login/login_screen.dart';
+// import '../../Login/login_screen.dart';
 import '../../Signup/signup_screen.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
@@ -21,7 +22,7 @@ class LoginAndSignupBtn extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return LoginForm();
                   },
                 ),
               );

@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:piriing/Screens/Login/login_screen.dart';
+import 'package:piriing/Screens/Login/components/login_form.dart';
+// import 'package:piriing/Screens/Login/login_screen.dart';
 import 'package:piriing/Screens/profile/editProfile.dart';
 import 'package:piriing/model/user.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _HomePageWidgetState extends State<profile2> {
     // Arahkan pengguna kembali ke halaman login
     Navigator.of(context).pushAndRemoveUntil(
       PageTransition(
-        child: LoginScreen(),
+        child: LoginForm(),
         type: PageTransitionType.fade,
         duration: const Duration(milliseconds: 500),
       ),

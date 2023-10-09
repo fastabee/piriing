@@ -5,7 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
 class TambahDarahKal extends StatefulWidget {
-  const TambahDarahKal({Key? key});
+  const TambahDarahKal({Key? key}) : super(key: key);
 
   @override
   State<TambahDarahKal> createState() => _TambahDarahKalState();
@@ -94,7 +94,6 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                       ],
                     ),
                   ),
-
                   // Add your other UI components here
                 ],
               ),
@@ -130,7 +129,7 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                               decoration: BoxDecoration(
                                 color: Colors.deepOrange,
                                 borderRadius: BorderRadius.circular(30),
-                                boxShadow: kElevationToShadow[1],
+                                boxShadow: [BoxShadow(blurRadius: 1)],
                               ),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 5,
@@ -155,7 +154,9 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                             lastDay: DateTime(2101),
                             headerStyle: HeaderStyle(
                               titleTextStyle: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             calendarStyle: CalendarStyle(
                               selectedDecoration: BoxDecoration(
@@ -188,6 +189,16 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                           Container(
                             alignment: Alignment.center,
                             child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: Size(200, 45),
+                                primary: Color.fromARGB(
+                                    255, 255, 48, 48), // Background color
+                                onPrimary: Colors.white, // Text color
+                                padding: EdgeInsets.all(16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
                               onPressed: () {
                                 Navigator.pushReplacement(
                                   context,
@@ -196,25 +207,6 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                                   ),
                                 );
                               },
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: Size(200, 45),
-                                primary: Color.fromARGB(255, 255, 48,
-                                    48), // Atur warna latar belakang tombol
-                                onPrimary:
-                                    Colors.white, // Atur warna teks tombol
-                                padding:
-                                    EdgeInsets.all(16), // Atur padding tombol
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      8), // Atur sudut tombol
-                                ),
-                                elevation: 3,
-                                textStyle: TextStyle(
-                                  fontSize: 12, // Atur ukuran teks tombol
-                                  fontWeight: FontWeight
-                                      .bold, // Atur ketebalan teks tombol
-                                ),
-                              ),
                               child: Text('Selanjutnya'),
                             ),
                           ),

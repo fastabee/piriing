@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:piriing/Screens/Login/components/login_form.dart';
 import 'package:piriing/components/constants.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
 
-import '../../Login/login_screen.dart';
+// import '../../Login/login_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -165,7 +166,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return LoginForm();
                   },
                 ),
               );

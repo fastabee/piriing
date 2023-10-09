@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:piriing/Screens/dashboard/dashboar.dart';
+import 'package:piriing/model/user.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -136,7 +137,7 @@ class InputDarah extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Nn. Christina',
+                                  '$UserData(username: username)',
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.deepOrange,

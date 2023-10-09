@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../login/login_page.dart';
+import 'package:piriing/Screens/Login/components/login_form.dart';
+// import 'package:piriing/Screens/Login/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginPage(),
+        builder: (context) => LoginForm(),
       ),
     );
   }
