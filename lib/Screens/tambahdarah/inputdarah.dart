@@ -13,7 +13,7 @@ class InputDarah extends StatefulWidget {
 }
 
 class _InputDarahState extends State<InputDarah> {
-  String currentDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+  String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   String clientId = "PKL2023";
   String clientSecret = "PKLSERU";
   String tokenUrl = "https://isipiringku.esolusindo.com/api/Token/token";
@@ -49,11 +49,26 @@ class _InputDarahState extends State<InputDarah> {
   List<TambahDarah> _database = [];
   String ID = '';
 
-  Future<void> loadUserData() async {
+  // Future<void> loadUserData() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final userDataString = prefs.getString('user_data');
+
+  //   if (userDataString != null) {
+  //     final userData = UserData.fromJson(json.decode(userDataString));
+  //     print(userData.nama);
+
+  //     setState(() {
+  //       ID = userData.idUser.toString();
+  //     });
+  //   }
+  // }
+
+  Future<void> _saveDataToDatabase() async {
     final prefs = await SharedPreferences.getInstance();
     final userDataString = prefs.getString('user_data');
 
     if (userDataString != null) {
+      print(userDataString);
       final userData = UserData.fromJson(json.decode(userDataString));
       print(userData.nama);
 
@@ -61,9 +76,7 @@ class _InputDarahState extends State<InputDarah> {
         ID = userData.idUser.toString();
       });
     }
-  }
-
-  Future<void> _saveDataToDatabase() async {
+    print(ID);
     await getToken(); // Panggil getToken() untuk mendapatkan token akses
 
     final url = Uri.parse('https://isipiringku.esolusindo.com/api/Darah/darah');
@@ -72,7 +85,7 @@ class _InputDarahState extends State<InputDarah> {
     final data = {
       "tanggal": currentDate,
       "id_user": ID,
-      "isTaken": 'sudah',
+      "status": 'sudah',
     };
 
     final response = await http.post(
@@ -106,7 +119,7 @@ class _InputDarahState extends State<InputDarah> {
   @override
   void initState() {
     super.initState();
-    loadUserData();
+    // loadUserData();
   }
 
   @override
