@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:marquee/marquee.dart';
 import 'package:piriing/Screens/profile/profile.dart';
+import 'package:intl/intl.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key});
@@ -468,8 +469,11 @@ class _DashboardState extends State<Dashboard> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => InputDarah(),
-                      ));
+                          builder: (context) => InputDarah(
+                                currentDateFromCalendar:
+                                    DateFormat('yyyy-MM-dd')
+                                        .format(DateTime.now()),
+                              )));
                 },
                 child: Text("b")),
           ),

@@ -203,7 +203,10 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => InputDarah(),
+                                    builder: (context) => InputDarah(
+                                      currentDateFromCalendar:
+                                          selectedDateText, // Kirim tanggal yang dipilih
+                                    ),
                                   ),
                                 );
                               },

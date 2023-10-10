@@ -4,10 +4,13 @@ import 'dart:convert';
 import 'package:piriing/Screens/dashboard/dashboar.dart';
 import 'package:piriing/model/tambahdarah.dart';
 import 'package:piriing/model/user.dart';
+import 'package:piriing/Screens/tambahdarah/kalenderTab.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InputDarah extends StatefulWidget {
+  final String currentDateFromCalendar;
+  InputDarah({required this.currentDateFromCalendar});
   @override
   _InputDarahState createState() => _InputDarahState();
 }
@@ -120,6 +123,7 @@ class _InputDarahState extends State<InputDarah> {
   void initState() {
     super.initState();
     // loadUserData();
+    currentDate = widget.currentDateFromCalendar;
   }
 
   @override
@@ -266,8 +270,27 @@ class _InputDarahState extends State<InputDarah> {
                                     SizedBox(width: 70),
                                     ElevatedButton(
                                       onPressed: () {
-                                        // Aksi saat tombol "Sudah" ditekan
-                                        _saveDataToDatabase();
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                  "Data Darah Berhasil Ditambah"),
+                                              content: Text(
+                                                  "Pesan berhasil ditambah."),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(); // Close the dialog
+                                                    _saveDataToDatabase(); // Call your function here
+                                                  },
+                                                  child: Text("OK"),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         primary: Colors.green,
