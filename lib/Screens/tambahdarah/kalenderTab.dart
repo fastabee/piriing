@@ -100,15 +100,15 @@ class _TambahDarahKalState extends State<TambahDarahKal> {
             ),
           ),
           Container(
-            height: 130,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/home.jpg'),
-                fit: BoxFit.cover,
+              //   height: 130,
+              //   width: double.infinity,
+              //   decoration: const BoxDecoration(
+              //     image: DecorationImage(
+              //       image: AssetImage('assets/images/home.jpg'),
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
               ),
-            ),
-          ),
           SingleChildScrollView(
             child: SafeArea(
               child: Padding(

@@ -9,7 +9,9 @@ import 'package:piriing/Screens/profile/profile.dart';
 
 import 'package:piriing/Screens/riwayat/riwayat.dart';
 import 'package:piriing/Screens/splashscreen/splashscreen.dart';
+import 'package:piriing/Screens/tambahdarah/inputdarah.dart';
 import 'package:piriing/bloc/nav/nav_bloc.dart';
+import 'package:piriing/databaseprovider.dart';
 
 import 'package:piriing/provider.dart';
 import 'package:provider/provider.dart';
@@ -24,8 +26,12 @@ void main() {
         BlocProvider(
           create: (context) => NavBloc(),
         ),
+        // child ChangeNotifierProvider(
+        //   create: context) => DatabaseProvider(),
       ],
-      child: const MyApp(),
+      child: MaterialApp(
+        home: InputDarah(),
+      ),
     ),
   );
 }

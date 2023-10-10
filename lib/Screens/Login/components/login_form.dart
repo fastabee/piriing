@@ -93,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
       userData = UserData.fromJson(responseData['response']);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('access_token', accessToken);
-      // Simpan data pengguna lainnya jika diperlukan
+// Simpan data pengguna lainnya jika diperlukan
       prefs.setString('user_data', json.encode(userData.toJson()));
 
       Navigator.pushReplacement(

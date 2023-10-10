@@ -15,23 +15,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:marquee/marquee.dart';
 import 'package:piriing/Screens/profile/profile.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Your App Title',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Dashboard(),
-    );
-  }
-}
-
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key});
 

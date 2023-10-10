@@ -1,18 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 import 'package:piriing/Screens/dashboard/dashboar.dart';
+import 'package:piriing/model/tambahdarah.dart';
 import 'package:piriing/model/user.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: InputDarah(),
-  ));
+class InputDarah extends StatefulWidget {
+  @override
+  _InputDarahState createState() => _InputDarahState();
 }
 
-class InputDarah extends StatelessWidget {
+class _InputDarahState extends State<InputDarah> {
+  String currentDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+  String clientId = "PKL2023";
+  String clientSecret = "PKLSERU";
+  String tokenUrl = "https://isipiringku.esolusindo.com/api/Token/token";
+  String accessToken = "";
+
+  Future<void> getToken() async {
+    try {
+      var response = await http.post(
+        Uri.parse(tokenUrl),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: {
+          'grant_type': 'client_credentials',
+          'client_id': clientId,
+          'client_secret': clientSecret,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> tokenData = jsonDecode(response.body);
+        accessToken = tokenData['access_token'];
+        print('Token Akses: $accessToken');
+      } else {
+        print('Gagal mendapatkan token: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Gagal mendapatkan token: $e');
+    }
+  }
+
+  // Simulated database (replace with your actual database implementation)
+  List<TambahDarah> _database = [];
+  String ID = '';
+
+  Future<void> loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userDataString = prefs.getString('user_data');
+
+    if (userDataString != null) {
+      final userData = UserData.fromJson(json.decode(userDataString));
+      print(userData.nama);
+
+      setState(() {
+        ID = userData.idUser.toString();
+      });
+    }
+  }
+
+  Future<void> _saveDataToDatabase() async {
+    await getToken(); // Panggil getToken() untuk mendapatkan token akses
+
+    final url = Uri.parse('https://isipiringku.esolusindo.com/api/Darah/darah');
+
+    // Create a Map for the data to be sent
+    final data = {
+      "tanggal": currentDate,
+      "id_user": ID,
+      "isTaken": 'sudah',
+    };
+
+    final response = await http.post(
+      url,
+      headers: {
+        // 'Authorization': 'Bearer $accessToken',
+      },
+      body: data, // Konversi objek data ke dalam bentuk JSON
+    );
+
+    if (response.statusCode == 200) {
+      // Data successfully sent to the server
+      final record = TambahDarah(
+        id_user: ID,
+        tanggal: currentDate,
+        status: 'sudah',
+      );
+
+      // In a real application, you would save the record to your database.
+      // Here, we'll add it to a list for demonstration purposes.
+      _database.add(record);
+
+      // Navigate back to the previous screen (Dashboard in this case)
+      Navigator.of(context).pop();
+    } else {
+      // Handle error here, e.g., show an error message to the user
+      print('Error: ${response.statusCode}, ${response.body}');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     return Scaffold(
       body: Stack(
         children: [
@@ -137,7 +235,7 @@ class InputDarah extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '$UserData(username: username)',
+                                  'Steven',
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.deepOrange,
@@ -156,6 +254,7 @@ class InputDarah extends StatelessWidget {
                                     ElevatedButton(
                                       onPressed: () {
                                         // Aksi saat tombol "Sudah" ditekan
+                                        _saveDataToDatabase();
                                       },
                                       style: ElevatedButton.styleFrom(
                                         primary: Colors.green,
