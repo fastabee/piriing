@@ -49,19 +49,19 @@ class _InputDarahState extends State<InputDarah> {
   List<TambahDarah> _database = [];
   String ID = '';
 
-  // Future<void> loadUserData() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final userDataString = prefs.getString('user_data');
+  Future<void> loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userDataString = prefs.getString('user_data');
 
-  //   if (userDataString != null) {
-  //     final userData = UserData.fromJson(json.decode(userDataString));
-  //     print(userData.nama);
+    if (userDataString != null) {
+      final userData = UserData.fromJson(json.decode(userDataString));
+      print(userData.nama);
 
-  //     setState(() {
-  //       ID = userData.idUser.toString();
-  //     });
-  //   }
-  // }
+      setState(() {
+        ID = userData.idUser.toString();
+      });
+    }
+  }
 
   Future<void> _saveDataToDatabase() async {
     final prefs = await SharedPreferences.getInstance();
